@@ -1,0 +1,13 @@
+{
+  "connectors": [{
+    "port": 9090
+  },
+  {
+    "port": 9091,
+    "vertx": {
+      "maxWebSocketFrameSize": 128000,
+      "maxWebSocketMessageSize": 256000,
+      "compressionLevel": 4
+    }
+  }]
+}
