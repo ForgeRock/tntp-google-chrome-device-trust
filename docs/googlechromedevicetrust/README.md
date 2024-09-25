@@ -33,7 +33,11 @@ The Google Chrome Device Trust node lets administrators authenticate users again
 
 ## Inputs
 
-No external inputs required.
+Must have PingGateway installed and configured successfully before continuing with this node.
+* Before the node is called a **Scripted Decision** node must be used to redirect to PingGateway from PingAM in order to generate and retrieve the challenge.
+
+The Google Chrome Device Trust node retrieves the Google Chrome challenge from the journey request parameters.
+* The challenge must be placed inside the redirect to PingAM as a query parameter by the PingGateway redirect route.
 
 ## Configuration
 
@@ -45,30 +49,33 @@ No external inputs required.
 
   <tr>
     <td>API Key</td>
-      <td>Google Cloud API Key.
+      <td>Google Cloud API Key
       </td>
   </tr>
-  <tr>
-    <td>Credentials Client Email</td>
-    <td>Google Admin Credentials Client Email.
-    </td>
 
-  </tr>
   <tr>
     <td>Private Key</td>
-    <td>Google Admin Credentials Private Key.
+    <td>Google Admin Credentials Private Key
     </td>
   </tr>
+
   <tr>
     <td>Key ID</td>
-    <td>Used to verify the authenticity and integrity of the JWT.
+    <td>Used to verify the authenticity and integrity of the JWT
     </td>
   </tr>
+
+  <tr>
+    <td>Credentials Client Email</td>
+    <td>Google Admin Credentials Client Email
+    </td>
+  </tr>
+
 </table>
 
 ## Outputs
 
-None
+`Device Trust Signals`
 
 ## Outcomes
 
