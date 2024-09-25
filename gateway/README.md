@@ -7,7 +7,7 @@ Follow this quick setup guide to test the functionality.
 PingGateway Redirect Routes Setup:
 1. Install PingGateway
     - [Quick Install Guide](https://backstage.forgerock.com/docs/ig/2024.6/getting-started/preface.html)
-2. Setup admin.json file to run on ports 9090 / 9443
+2. Configure the `admin.json` file to run PingGateway on ports 9090 / 9443
     - [Startup PingGateway with custom settings](https://backstage.forgerock.com/docs/ig/2024.6/installation-guide/start-stop.html#starting-options)
 3. Store the JSON route files inside the routes directory
     - E.g. `/Users/your-username/.openig/config/routes`
