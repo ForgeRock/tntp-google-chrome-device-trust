@@ -59,6 +59,11 @@ No external inputs required.
     <td>Google Admin Credentials Private Key.
     </td>
   </tr>
+  <tr>
+    <td>Key ID</td>
+    <td>Used to verify the authenticity and integrity of the JWT.
+    </td>
+  </tr>
 </table>
 
 ## Outputs

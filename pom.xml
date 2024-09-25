@@ -15,7 +15,7 @@
     <artifactId>TNTPGoogleChromeDeviceTrust</artifactId>
 
     <groupId>org.forgerock.am.marketplace</groupId>
-    <version>0.0.47</version>
+    <version>0.0.49</version>
     <name>Google Chrome Device Trust</name>
     <description>Google Chrome Device Trust Integration</description>
 

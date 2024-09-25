@@ -23,18 +23,16 @@ import org.forgerock.openam.auth.node.api.*;
 import org.forgerock.json.JsonValue;
 import org.forgerock.openam.auth.node.api.OutcomeProvider;
 
-import com.sun.identity.sm.RequiredValueValidator;
 import com.google.inject.assistedinject.Assisted;
 import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
 
 /**
- *
  * The Google Chrome Device Trust node allows access to the Device Trust Signals available from a managed Google Chrome browser.
  */
 @Node.Metadata(outcomeProvider = GoogleChromeDeviceTrust.GoogleChromeDeviceTrustOutcomeProvider.class,
-               configClass = GoogleChromeDeviceTrust.Config.class,
-               tags = {"marketplace", "trustnetwork"})
+        configClass = GoogleChromeDeviceTrust.Config.class,
+        tags = {"marketplace", "trustnetwork"})
 public class GoogleChromeDeviceTrust implements Node {
 
     private static final Logger logger = LoggerFactory.getLogger(GoogleChromeDeviceTrust.class);
@@ -60,20 +58,30 @@ public class GoogleChromeDeviceTrust implements Node {
         String apiKey();
 
         /**
-         * Shared state attribute containing Google Admin Credentials Client Email
-         *
-         * @return The Google Admin Credentials Client Email shared state attribute
-         */
-        @Attribute(order = 200, validators = {RequiredValueValidator.class})
-        String clientEmail();
-
-        /**
          * Shared state attribute containing Google Admin Credentials Private Key
          *
          * @return The Google Admin Credentials Private Key shared state attribute
          */
-        @Attribute(order = 300)
-        default String privateKey() { return "-----BEGIN PRIVATE KEY-----\n...\n-----END PRIVATE KEY-----"; }
+        @Attribute(order = 200, requiredValue = true)
+        default String privateKey() {
+            return "-----BEGIN PRIVATE KEY-----\n...\n-----END PRIVATE KEY-----";
+        }
+
+        /**
+         * Shared state attribute containing the Key ID
+         *
+         * @return The Key ID shared state attribute
+         */
+        @Attribute(order = 300, requiredValue = true)
+        String kid();
+
+        /**
+         * Shared state attribute containing Google Admin Credentials Client Email
+         *
+         * @return The Google Admin Credentials Client Email shared state attribute
+         */
+        @Attribute(order = 400, requiredValue = true)
+        String clientEmail();
 
     }
 
@@ -96,33 +104,31 @@ public class GoogleChromeDeviceTrust implements Node {
         NodeState nodeState = context.getStateFor(this);
 
         try {
-
             // Capture the challenge header
             Map<String, List<String>> parameters = context.request.parameters;
+
+            // URL encode and decode the challenge header in order to preserve the '+' signs
             String challengeResponseEncoded = parameters.get("challengeresponse").get(0).replaceAll("\\+", "%2b");
-
-            logger.error("Encoded: {}", challengeResponseEncoded);
-
             String challengeResponse = java.net.URLDecoder.decode(challengeResponseEncoded, StandardCharsets.UTF_8);
 
-            logger.error("Decoded: {}", challengeResponse);
-
-                JsonValue getVerifiedAccessResponse = client.getVerifiedAccess(
+            // API call to retrieve device signals
+            JsonValue getVerifiedAccessResponse = client.getVerifiedAccess(
                     config.apiKey(),
-                    config.clientEmail(),
                     config.privateKey(),
-                        challengeResponse
-                );
+                    config.kid(),
+                    config.clientEmail(),
+                    challengeResponse
+            );
 
-                // Store the user's verification results
-                nodeState.putTransient("verifiedAccessResults", getVerifiedAccessResponse);
+            // Dynamically places the return object key-value pairs into transient state
+            for (String key : getVerifiedAccessResponse.keys()) {
+                JsonValue prop = getVerifiedAccessResponse.get(key);
+                nodeState.putTransient(key, prop);
+            }
 
+            return Action.goTo(GoogleChromeDeviceTrustOutcomeProvider.CONTINUE_OUTCOME_ID).build();
 
-
-                return Action.goTo(GoogleChromeDeviceTrustOutcomeProvider.CONTINUE_OUTCOME_ID).build();
-
-        }
-        catch (Exception ex) {
+        } catch (Exception ex) {
             String stackTrace = ExceptionUtils.getStackTrace(ex);
             logger.error(LOGGER_PREFIX + "Exception occurred: ", ex);
             context.getStateFor(this).putTransient(LOGGER_PREFIX + "Exception", new Date() + ": " + ex.getMessage());
@@ -134,14 +140,14 @@ public class GoogleChromeDeviceTrust implements Node {
     @Override
     public InputState[] getInputs() {
         return new InputState[]{
-            new InputState(VERIFIED_ACCESS_CHALLENGE, false)
+                new InputState(VERIFIED_ACCESS_CHALLENGE, false)
         };
     }
 
     @Override
     public OutputState[] getOutputs() {
         return new OutputState[]{
-            new OutputState("verifiedAccessResults")
+                new OutputState("verifiedAccessResults")
         };
     }
 
