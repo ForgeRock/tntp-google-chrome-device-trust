@@ -14,8 +14,6 @@ This integration allows access to the Device Trust Signals available from a mana
 Identity Cloud provides the following artifacts to enable the Google Chrome Device Trust Node:
 
 * [Google Chrome Device Trust](https://github.com/ForgeRock/tntp-google-chrome-device-trust/blob/main/docs/googlechromedevicetrust/README.md)
-* [PingGateway Setup](https://backstage.forgerock.com/docs/ig/2024.6/getting-started/preface.html)
-* [PingGateway Configuration](https://backstage.forgerock.com/docs/ig/2024.6/configure/preface.html)
 
 You must set up the following before using the Chrome Device Trust node:
 * [Install PingGateway](https://backstage.forgerock.com/docs/ig/2024.6/installation-guide/preface.html)
