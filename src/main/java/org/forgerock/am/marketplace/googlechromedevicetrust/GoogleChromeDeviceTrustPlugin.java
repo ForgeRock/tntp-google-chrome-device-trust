@@ -52,7 +52,7 @@ import static java.util.Arrays.asList;
  */
 
 public class GoogleChromeDeviceTrustPlugin extends AbstractNodeAmPlugin {
-    protected static final String CURRENT_VERSION = "0.0.49";
+    protected static final String CURRENT_VERSION = "1.0.0";
     protected static final String LOG_APPENDER = "[Version: " + CURRENT_VERSION + "][Marketplace]";
     private static final Logger logger = LoggerFactory.getLogger(GoogleChromeDeviceTrustPlugin.class);
     private final String LOGGER_PREFIX = "[GoogleChromeDeviceTrustPlugin]" + GoogleChromeDeviceTrustPlugin.LOG_APPENDER;

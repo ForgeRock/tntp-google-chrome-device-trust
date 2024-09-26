@@ -15,14 +15,14 @@
     <artifactId>TNTPGoogleChromeDeviceTrust</artifactId>
 
     <groupId>org.forgerock.am.marketplace</groupId>
-    <version>0.0.49</version>
+    <version>1.0.0</version>
     <name>Google Chrome Device Trust</name>
     <description>Google Chrome Device Trust Integration</description>
 
     <properties>
-        <am.version>7.5.0</am.version>
-        <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
+        <am.version>7.6.0-SNAPSHOT</am.version>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <forgerockDistMgmtReleasesUrl>https://maven.forgerock.org/artifactory/internal-releases</forgerockDistMgmtReleasesUrl>
     </properties>
