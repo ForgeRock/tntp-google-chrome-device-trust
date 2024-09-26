@@ -22,7 +22,7 @@ Simplified Explanation:
    - This route makes the API call by running the `getChallenge.groovy` script 
 2. The 1st route then redirects to the 2nd route (`challengeresponse.json`) and performs the following:
     - Retrieves the challenge response value
-    - Stores the challenge inside the redirect URL as a query parameter
+    - Puts the challenge inside the redirect URL as a query parameter
     - Redirects back to PingAM
 
 ---
