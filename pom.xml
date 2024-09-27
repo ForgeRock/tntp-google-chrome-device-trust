@@ -15,12 +15,12 @@
     <artifactId>TNTPGoogleChromeDeviceTrust</artifactId>
 
     <groupId>org.forgerock.am.marketplace</groupId>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
     <name>Google Chrome Device Trust</name>
     <description>Google Chrome Device Trust Integration</description>
 
     <properties>
-        <am.version>7.6.0-SNAPSHOT</am.version>
+        <am.version>7.5.0</am.version>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -68,22 +68,12 @@
     <dependencies>
         <dependency>
             <groupId>org.forgerock.commons</groupId>
-            <artifactId>forgerock-test-utils</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.forgerock.commons</groupId>
             <artifactId>json-web-token</artifactId>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.forgerock.am</groupId>
             <artifactId>auth-node-api</artifactId>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.forgerock.am</groupId>
-            <artifactId>openam-guice-core</artifactId>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -95,10 +85,6 @@
             <groupId>org.forgerock.am</groupId>
             <artifactId>service-config-api</artifactId>
             <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.forgerock.am</groupId>
-            <artifactId>openam-oauth2</artifactId>
         </dependency>
         <dependency>
             <groupId>javax.servlet</groupId>
