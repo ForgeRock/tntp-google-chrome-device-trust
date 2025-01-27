@@ -139,7 +139,11 @@ public class GoogleChromeDeviceTrustClient {
 
         // Format and generate the private key
         try {
-            final byte[] privateData = Base64.getDecoder().decode(privateKeyString.replaceAll("-----BEGIN PRIVATE KEY-----", "").replaceAll("-----END PRIVATE KEY-----", "").replaceAll("\\s", ""));
+            final byte[] privateData = Base64.getDecoder().decode(privateKeyString
+                    .replace("-----BEGIN PRIVATE KEY-----", "")
+                    .replace("-----END PRIVATE KEY-----", "")
+                    .replace("\n", "")
+                    .replaceAll("\\s", ""));
             privateKey = KeyFactory.getInstance("RSA").generatePrivate(new PKCS8EncodedKeySpec(privateData));
         } catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
             logger.error(String.valueOf(e));
