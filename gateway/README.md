@@ -18,7 +18,7 @@ PingGateway Redirect Routes Setup:
 ---
 
 Simplified Explanation:
-1. The 1st route (`pingam.json`) makes an API call to Google to generate the challenge
+1. The 1st route (`generate_challenge.json`) makes an API call to Google to generate the challenge
    - This route makes the API call by running the `getChallenge.groovy` script 
 2. The 1st route then redirects to the 2nd route (`challengeresponse.json`) and performs the following:
     - Retrieves the challenge response value
@@ -28,7 +28,7 @@ Simplified Explanation:
 ---
 
 Tips:
-1. Open the `pingam.json` route and check the `condition` field. Make sure this matches your current PingAM version. 
+1. Open the `generate_challenge.json` route and check the `condition` field. Make sure this matches your current PingAM version. 
 2. Open the `challengeresponse.json` route and swap out the `location` redirect URL to match your desired location.
    - Do not remove the `challengeresponse` query parameter at the end of the redirect.
 
