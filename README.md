@@ -8,8 +8,8 @@
 
 This integration allows access to the Device Trust Signals available from a managed Google Chrome browser. This includes:
 
-* [Google Chrome Device Trust Documentation](to-do)
-* [Verified Access API](to-do)
+* [Google Chrome Device Trust Documentation](https://support.google.com/chrome/a/answer/13570263?hl=en&sjid=11246580041892197302-NC)
+* [Verified Access API](https://developers.google.com/chrome/verified-access/reference/rest)
 
 Identity Cloud provides the following artifacts to enable the Google Chrome Device Trust Node:
 
