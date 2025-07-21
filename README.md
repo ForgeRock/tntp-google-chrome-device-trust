@@ -8,7 +8,7 @@
 
 This integration allows access to the Device Trust Signals available from a managed Google Chrome browser. This includes:
 
-* [Google Chrome Device Trust Documentation]([https://pingone-davinci.github.io/documentation/google-chrome/](https://docs.pingidentity.com/pingoneaic/latest/release-notes/rapid-channel/auth-node-chrome-trust.html))
+* [Google Chrome Device Trust Documentation]([https://pingone-davinci.github.io/documentation/google-chrome/](https://docs.pingidentity.com/pingoneaic/latest/release-notes/rapid-channel/auth-node-chrome-trust.html)
 * [Establish device trust with Chrome Enterprise and Ping Identity](https://cloud.google.com/blog/products/chrome-enterprise/establish-device-trust-chrome-enterprise-and-ping-identity)
 
 Identity Cloud provides the following artifacts to enable the Google Chrome Device Trust Node:
