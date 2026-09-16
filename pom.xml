@@ -15,7 +15,7 @@
     <artifactId>TNTPGoogleChromeDeviceTrust</artifactId>
 
     <groupId>org.forgerock.am.marketplace</groupId>
-    <version>1.0.1</version>
+    <version>1.0.2</version>
     <name>Google Chrome Device Trust</name>
     <description>Google Chrome Device Trust Integration</description>
 
@@ -91,7 +91,11 @@
             <artifactId>javax.servlet-api</artifactId>
             <scope>provided</scope>
         </dependency>
-    </dependencies>
+            <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+        </dependency>
+</dependencies>
 
     <repositories>
         <repository>
