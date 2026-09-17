@@ -107,26 +107,36 @@ public class GoogleChromeDeviceTrust implements Node {
             // Capture the challenge header
             Map<String, List<String>> parameters = context.request.parameters;
 
-            // URL encode and decode the challenge header in order to preserve the '+' signs
-            String challengeResponseEncoded = parameters.get("challengeresponse").get(0).replaceAll("\\+", "%2b");
-            String challengeResponse = java.net.URLDecoder.decode(challengeResponseEncoded, StandardCharsets.UTF_8);
+            // Check if "challengeresponse" exists and its value is "devicetrustdisabled"
+            if (parameters.containsKey("challengeresponse") &&
+                    parameters.get("challengeresponse") != null &&
+                    !parameters.get("challengeresponse").isEmpty() &&
+                    "devicetrustdisabled".equals(parameters.get("challengeresponse").get(0))
+            ) {
+                logger.error("The 'challengeresponse' parameter has been set to: {}", parameters.get("challengeresponse").get(0));
+                return Action.goTo(GoogleChromeDeviceTrustOutcomeProvider.DISABLED_OUTCOME_ID).build();
+            } else {
+                // URL encode and decode the challenge header to preserve the '+' signs
+                String challengeResponseEncoded = parameters.get("challengeresponse").get(0).replaceAll("\\+", "%2b");
+                String challengeResponse = java.net.URLDecoder.decode(challengeResponseEncoded, StandardCharsets.UTF_8);
 
-            // API call to retrieve device signals
-            JsonValue getVerifiedAccessResponse = client.getVerifiedAccess(
-                    config.apiKey(),
-                    config.privateKey(),
-                    config.kid(),
-                    config.clientEmail(),
-                    challengeResponse
-            );
+                // API call to retrieve device signals
+                JsonValue getVerifiedAccessResponse = client.getVerifiedAccess(
+                        config.apiKey(),
+                        config.privateKey(),
+                        config.kid(),
+                        config.clientEmail(),
+                        challengeResponse
+                );
 
-            // Dynamically places the return object key-value pairs into transient state
-            for (String key : getVerifiedAccessResponse.keys()) {
-                JsonValue prop = getVerifiedAccessResponse.get(key);
-                nodeState.putTransient(key, prop);
+                // Dynamically places the return object key-value pairs into transient state
+                for (String key : getVerifiedAccessResponse.keys()) {
+                    JsonValue prop = getVerifiedAccessResponse.get(key);
+                    nodeState.putTransient(key, prop);
+                }
+
+                return Action.goTo(GoogleChromeDeviceTrustOutcomeProvider.ENABLED_OUTCOME_ID).build();
             }
-
-            return Action.goTo(GoogleChromeDeviceTrustOutcomeProvider.CONTINUE_OUTCOME_ID).build();
 
         } catch (Exception ex) {
             String stackTrace = ExceptionUtils.getStackTrace(ex);
@@ -153,7 +163,9 @@ public class GoogleChromeDeviceTrust implements Node {
 
     public static class GoogleChromeDeviceTrustOutcomeProvider implements OutcomeProvider {
 
-        static final String CONTINUE_OUTCOME_ID = "continue";
+        // If challenge response is not there, continue
+        static final String ENABLED_OUTCOME_ID = "enabled";
+        static final String DISABLED_OUTCOME_ID = "disabled";
         static final String CLIENT_ERROR_OUTCOME_ID = "clientError";
 
         @Override
@@ -162,7 +174,8 @@ public class GoogleChromeDeviceTrust implements Node {
 
             ArrayList<Outcome> outcomes = new ArrayList<>();
 
-            outcomes.add(new Outcome(CONTINUE_OUTCOME_ID, bundle.getString(CONTINUE_OUTCOME_ID)));
+            outcomes.add(new Outcome(ENABLED_OUTCOME_ID, bundle.getString(ENABLED_OUTCOME_ID)));
+            outcomes.add(new Outcome(DISABLED_OUTCOME_ID, bundle.getString(DISABLED_OUTCOME_ID)));
             outcomes.add(new Outcome(CLIENT_ERROR_OUTCOME_ID, bundle.getString(CLIENT_ERROR_OUTCOME_ID)));
 
             return outcomes;
